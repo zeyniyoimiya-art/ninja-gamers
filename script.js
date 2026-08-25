@@ -13,8 +13,10 @@ const cat = {
     { nombre: "2180 + 218 💎", precio: "164" }, { nombre: "5600 + 560 💎", precio: "410" }
   ],
   ffPases: [
-    { nombre: "120 💎 — Pase", precio: "3.50" }, { nombre: "200 💎 — Pase", precio: "4.50" },
-    { nombre: "350 💎 — Pase", precio: "6.50" }, { nombre: "Pase Completo (1270 💎)", precio: "26.50" }
+    { nombre: "120 💎 — Pase", precio: "3.50", nota: "Solo 1 vez por cuenta" },
+    { nombre: "200 💎 — Pase", precio: "4.50", nota: "Solo 1 vez por cuenta" },
+    { nombre: "350 💎 — Pase", precio: "6.50", nota: "Solo 1 vez por cuenta" },
+    { nombre: "Pase Completo (1270 💎)", precio: "26.50", nota: "Solo 1 vez por cuenta" }
   ],
   mlDiamantes: [
     { nombre: "78 + 8 💎", precio: "16" }, { nombre: "156 + 16 💎", precio: "30" },
@@ -91,6 +93,13 @@ function construirTarjeta(pack, seccion) {
 
   div.appendChild(cant);
   div.appendChild(precio);
+  // nota opcional (ej. "Solo 1 vez por cuenta")
+  if (pack.nota) {
+    const nota = document.createElement("div");
+    nota.className = "nota";
+    nota.textContent = pack.nota;
+    div.appendChild(nota);
+  }
   div.appendChild(btn);
   return div;
 }
