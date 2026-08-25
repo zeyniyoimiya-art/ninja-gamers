@@ -1,0 +1,259 @@
+/* ===== NINJA GAMERS — Estilo gamer neón ===== */
+:root {
+  --negro: #0a0a0f;
+  --negro2: #14141c;
+  --verde: #c6ff00;      /* verde lima neón */
+  --azul: #00d4ff;       /* azul eléctrico */
+  --amarillo: #ffe600;
+  --texto: #e8e8ef;
+  --gris: #9a9aa8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--negro);
+  color: var(--texto);
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  padding: 24px 16px 10px;
+  background: radial-gradient(circle at 50% 0%, #1a1a2e 0%, var(--negro) 70%);
+  border-bottom: 3px solid var(--verde);
+  box-shadow: 0 0 20px rgba(198,255,0,.25);
+}
+
+.logo-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+
+.ninja-logo {
+  width: 78px; height: 78px;
+  border-radius: 50%;
+  border: 3px solid var(--verde);
+  box-shadow: 0 0 18px var(--verde), inset 0 0 12px rgba(0,212,255,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 34px;
+  position: relative;
+  background: radial-gradient(circle at 30% 30%, #0f2240, #0a0a0f);
+}
+.ninja-face { position: relative; }
+.katana { position: absolute; top: -7px; right: -7px; font-size: 20px; transform: rotate(30deg); }
+
+h1 {
+  font-size: 34px;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 12px var(--verde);
+}
+h1 .accent { color: var(--verde); }
+
+.lema {
+  color: var(--azul);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.tagline { color: var(--amarillo); font-weight: 700; margin-top: 8px; font-size: 15px; text-shadow: 0 0 8px rgba(255,230,0,.5); }
+
+/* ===== AVISO BONUS ===== */
+.aviso-bonus {
+  background: linear-gradient(90deg, var(--amarillo), var(--verde));
+  color: #000;
+  font-weight: 800;
+  text-align: center;
+  padding: 10px 12px;
+  font-size: 13px;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 50% { opacity: .75; } }
+
+/* ===== BADGES ===== */
+.badges {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  padding: 16px 12px;
+}
+.badge {
+  background: var(--negro2);
+  border: 2px solid var(--azul);
+  color: #fff;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 0 10px rgba(0,212,255,.35);
+}
+
+/* ===== MONEDA BAR ===== */
+.moneda-bar {
+  text-align: center;
+  color: var(--verde);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-top: 1px dashed #333;
+  border-bottom: 1px dashed #333;
+  margin-bottom: 8px;
+}
+
+/* ===== TABS ===== */
+.tabs {
+  display: flex; justify-content: center; gap: 8px;
+  flex-wrap: wrap;
+  padding: 14px 10px;
+  position: sticky; top: 0;
+  background: rgba(10,10,15,.95);
+  z-index: 50;
+}
+.tab {
+  background: var(--negro2);
+  color: var(--texto);
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: .2s;
+}
+.tab:hover { border-color: var(--verde); }
+.tab.active {
+  background: var(--verde);
+  color: #000;
+  border-color: var(--verde);
+  box-shadow: 0 0 14px rgba(198,255,0,.6);
+}
+
+/* ===== CONTENIDO / PANELES ===== */
+.contenido { padding: 8px 12px 40px; max-width: 1100px; margin: 0 auto; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.titulo-juego {
+  text-align: center;
+  font-size: 22px;
+  margin: 18px 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.titulo-juego .ff { color: #ff7a00; }
+.titulo-juego .ml { color: var(--azul); }
+.titulo-juego .mc { color: #c39dff; }
+
+.titulo-cat {
+  margin: 20px 0 12px;
+  font-size: 16px;
+  border-left: 4px solid var(--azul);
+  padding-left: 10px;
+  color: var(--verde);
+  text-transform: uppercase;
+}
+.titulo-cat.ml2 { border-color: var(--azul); }
+.titulo-cat.mc2 { border-color: #c39dff; }
+
+/* ===== GRID / CARDS ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.card {
+  background: var(--negro2);
+  border: 2px solid #2a2a38;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  transition: .2s;
+}
+.card:hover { border-color: var(--verde); transform: translateY(-3px); box-shadow: 0 0 14px rgba(198,255,0,.3); }
+
+.card .cantidad {
+  font-size: 20px; font-weight: 800; color: #fff;
+}
+.card .cantidad small { color: var(--gris); font-size: 13px; font-weight: 600; }
+
+.card .precio {
+  font-size: 20px; font-weight: 900; color: var(--verde);
+  text-shadow: 0 0 8px rgba(198,255,0,.4);
+}
+.card .precio span { font-size: 12px; color: var(--gris); font-weight: 600; }
+
+.btn-pedir {
+  background: linear-gradient(90deg, #1eb75d, #128c4a);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: .2s;
+}
+.btn-pedir:hover { filter: brightness(1.15); }
+
+/* card próximamente */
+.card.prox {
+  text-align: center;
+  color: var(--gris);
+  font-weight: 700;
+  border-style: dashed;
+  justify-content: center;
+  font-size: 14px;
+}
+.card.prox::after { content: "🔜"; display: block; margin-top: 4px; }
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--negro2);
+  border-top: 3px solid var(--azul);
+  text-align: center;
+  padding: 24px 16px;
+}
+.footer h3 { color: var(--verde); margin-bottom: 12px; font-size: 15px; }
+.pagos, .contactos {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-bottom: 18px;
+}
+.pagos span {
+  background: #1e1e2a;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px; color: var(--texto);
+}
+.contactos a {
+  color: var(--azul);
+  text-decoration: none;
+  font-weight: 700;
+  border: 2px solid var(--azul);
+  border-radius: 20px;
+  padding: 8px 14px;
+}
+.contactos a:hover { background: var(--azul); color: #000; }
+.copy { color: var(--gris); font-size: 12px; margin-top: 6px; }
+
+/* ===== WHATSAPP FLOTANTE ===== */
+.whatsapp-flotante {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  width: 60px; height: 60px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(37,211,102,.6);
+  z-index: 100;
+  animation: float 2s infinite;
+}
+@keyframes float { 50% { transform: translateY(-5px); } }
+
+/* ===== MÓVIL ===== */
+@media (max-width: 480px) {
+  h1 { font-size: 26px; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .badge { font-size: 11px; padding: 6px 10px; }
+}
