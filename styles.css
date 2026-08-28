@@ -1,4 +1,4 @@
-﻿/* ============================================
+/* ============================================
    NINJA GAMERS — Diseño iOS Glassmorphism
    Fondo oscuro profundo + orbes de luz + cristal
    ============================================ */
@@ -18,6 +18,7 @@
   --azul-a: rgba(56,189,248,0.14);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --max-ancho: 900px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,11 +35,35 @@ body {
   overflow-x: hidden;
 }
 
+[hidden] { display: none !important; }
+
+/* Foco visible y consistente en todo el sitio */
+:focus-visible {
+  outline: 2px solid var(--verde);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* Enlace de salto para lectores de pantalla / teclado */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  background: var(--verde);
+  color: #06130b;
+  font-weight: 800;
+  padding: 10px 16px;
+  border-radius: 0 0 12px 0;
+  text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
 /* ===== ORBES DE LUZ DE FONDO ===== */
 .bg-orbs {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: -1;          /* detrás de TODO el contenido, sin trucos de z-index */
   pointer-events: none;
   overflow: hidden;
 }
@@ -57,12 +82,6 @@ body {
   50% { transform: translate(30px,-30px) scale(1.08); }
 }
 
-/* Asegurar que el contenido quede sobre el fondo */
-.header, .badges, .moneda-bar, .tablist, .contenido, .footer {
-  position: relative;
-  z-index: 1;
-}
-
 /* ===== HEADER ===== */
 .header {
   text-align: center;
@@ -73,8 +92,10 @@ body {
   align-items: center;
   justify-content: center;
   gap: 16px;
+  flex-wrap: wrap;
 }
 .ninja-logo {
+  flex: none;
   width: 68px;
   height: 68px;
   border-radius: 22px;
@@ -92,7 +113,7 @@ body {
 @keyframes logoIn { from { transform: scale(0.6) rotate(-8deg); opacity: 0; } }
 
 .titulo {
-  font-size: 34px;
+  font-size: clamp(28px, 8vw, 40px);
   font-weight: 900;
   letter-spacing: 1px;
   color: #fff;
@@ -121,7 +142,8 @@ body {
 
 /* ===== AVISO BONUS ===== */
 .aviso-bonus {
-  margin: 6px 16px 0;
+  max-width: var(--max-ancho);
+  margin: 6px auto 0;
   background: linear-gradient(90deg, var(--verde-a), var(--azul-a));
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(20px);
@@ -132,6 +154,7 @@ body {
   text-align: center;
   padding: 12px 14px;
   border-radius: 14px;
+  width: calc(100% - 32px);
 }
 
 /* ===== BADGES ===== */
@@ -175,14 +198,23 @@ body {
   font-weight: 600;
   color: var(--texto-dim);
 }
+.chip-link {
+  text-decoration: none;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--spring);
+}
+.chip-link:hover {
+  color: #fff;
+  border-color: rgba(43,255,122,0.45);
+  transform: translateY(-1px);
+}
 
 /* ===== TABS (Segmented Control iOS) ===== */
 .tablist {
   display: flex;
   gap: 6px;
   padding: 6px;
-  margin: 8px 14px 6px;
-  background: rgba(255,255,255,0.04);
+  margin: 8px auto 6px;
+  background: rgba(12,12,18,0.72);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -191,22 +223,24 @@ body {
   top: 10px;
   z-index: 50;
   max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
+  width: calc(100% - 28px);
 }
 .tab {
   flex: 1;
+  min-width: 0;
   border: none;
   background: transparent;
   color: var(--texto-dim);
   font-family: inherit;
   font-weight: 700;
   font-size: 13px;
-  padding: 11px 8px;
+  padding: 11px 6px;
   border-radius: 11px;
   cursor: pointer;
-  transition: all 0.3s var(--spring);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), box-shadow 0.3s var(--ease);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .tab:hover { color: #fff; }
 .tab.active {
@@ -215,14 +249,70 @@ body {
   box-shadow: 0 6px 20px rgba(43,255,122,0.35);
 }
 
+/* ===== BUSCADOR ===== */
+.buscador-wrap {
+  max-width: 640px;
+  width: calc(100% - 28px);
+  margin: 10px auto 0;
+}
+.buscador {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 14px;
+  padding: 4px 10px;
+  transition: border-color 0.25s var(--ease);
+}
+.buscador:focus-within { border-color: rgba(43,255,122,0.5); }
+.lupa { font-size: 14px; opacity: 0.8; }
+.buscador input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 0;
+}
+.buscador input::placeholder { color: var(--texto-dim); }
+.buscador input::-webkit-search-cancel-button { display: none; }
+.limpiar {
+  border: none;
+  background: var(--glass-highlight);
+  color: var(--texto-dim);
+  font-size: 12px;
+  line-height: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+.limpiar:hover { color: #fff; background: rgba(255,255,255,0.14); }
+.resultado-info {
+  margin: 8px 4px 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--verde);
+  text-align: center;
+  min-height: 14px;
+}
+
 /* ===== CONTENIDO ===== */
 .contenido {
-  max-width: 900px;
+  max-width: var(--max-ancho);
   margin: 0 auto;
   padding: 18px 16px 48px;
 }
 .panel { display: none; }
 .panel.active { display: block; animation: panelIn 0.45s var(--spring) both; }
+.panel:focus { outline: none; }
 @keyframes panelIn { from { opacity: 0; transform: translateY(14px); } }
 
 .titulo-juego {
@@ -237,7 +327,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 22px 0 14px;
+  margin: 26px 0 18px;
   font-size: 15px;
   font-weight: 800;
   color: #fff;
@@ -245,6 +335,7 @@ body {
   letter-spacing: 1px;
 }
 .titulo-cat .ico {
+  flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -259,8 +350,8 @@ body {
 /* ===== GRID / CARDS (Glass) ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px 14px;
 }
 .card {
   position: relative;
@@ -273,13 +364,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow: hidden;
   transition: transform 0.35s var(--spring), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
   opacity: 0;
   transform: translateY(16px);
   animation: cardIn 0.5s var(--spring) forwards;
 }
 @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+
 /* Escalonado al aparecer */
 .card:nth-child(1) { animation-delay: 0.02s; }
 .card:nth-child(2) { animation-delay: 0.06s; }
@@ -294,25 +385,31 @@ body {
 .card:nth-child(n+11) { animation-delay: 0.42s; }
 
 .card:hover {
-  transform: scale(1.02);
+  transform: translateY(-3px);
   border-color: rgba(43,255,122,0.4);
   box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 24px rgba(43,255,122,0.12);
 }
-/* brillo superior tipo iOS */
+
+/* brillo superior tipo iOS (sin overflow:hidden, así el tag no se recorta) */
 .card::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 16px;
+  right: 16px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+  pointer-events: none;
 }
 
 .cantidad {
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.5px;
   line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 .pase-ico {
   display: inline-block;
@@ -320,13 +417,27 @@ body {
   vertical-align: middle;
   margin-right: 5px;
 }
+.cantidad .extra {
+  display: block;
+  font-size: 12px;
+  color: var(--texto-dim);
+  font-weight: 600;
+  margin-top: 5px;
+  letter-spacing: 0;
+}
 
 .precio {
   font-size: 24px;
   font-weight: 900;
   color: var(--verde);
+  margin-top: auto;
 }
-.precio .bs { font-size: 12px; color: var(--texto-dim); font-weight: 600; }
+.precio .simbolo {
+  font-size: 13px;
+  color: var(--texto-dim);
+  font-weight: 700;
+  margin-right: 2px;
+}
 
 .nota {
   font-size: 11px;
@@ -360,6 +471,25 @@ body {
 }
 .btn-pedir:active { transform: scale(0.97); }
 
+/* ===== TAGS ===== */
+.tag {
+  position: absolute;
+  top: -9px;
+  right: 12px;
+  z-index: 2;
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: #1a1200;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 3px 10px rgba(255,200,0,0.35);
+  white-space: nowrap;
+}
+.tag-hot { background: linear-gradient(135deg, #ff4d4d, #ff7a00); color: #fff; }
+.tag-fav { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #3a2a00; }
+
 /* card próximamente */
 .card.prox {
   justify-content: center;
@@ -370,15 +500,35 @@ body {
   font-size: 14px;
   border-style: dashed;
   min-height: 90px;
+  gap: 0;
 }
 .card.prox::after { content: "🔜"; display: block; margin-top: 6px; font-size: 18px; }
+.card.prox:hover { transform: none; border-color: var(--glass-border); box-shadow: none; }
+
+/* ===== SIN RESULTADOS ===== */
+.sin-resultados {
+  text-align: center;
+  color: var(--texto);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 36px 16px;
+  background: var(--glass-bg);
+  border: 1px dashed var(--glass-border);
+  border-radius: 18px;
+  margin-top: 10px;
+}
+.sin-resultados span {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--texto-dim);
+}
 
 /* ===== FOOTER ===== */
 .footer {
-  position: relative;
-  z-index: 1;
   text-align: center;
-  padding: 32px 18px 40px;
+  padding: 32px 18px 96px;
   background: var(--glass-bg);
   border-top: 1px solid var(--glass-border);
   backdrop-filter: blur(20px);
@@ -419,15 +569,21 @@ body {
 /* ===== WHATSAPP FLOTANTE ===== */
 .whatsapp-flotante {
   position: fixed;
-  bottom: 22px; right: 20px;
-  width: 58px; height: 58px;
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  right: 20px;
+  width: 58px;
+  height: 58px;
   background: linear-gradient(135deg, #25d366, #128c4a);
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 8px 24px rgba(18,140,74,0.5);
   z-index: 100;
   text-decoration: none;
+  transition: transform 0.25s var(--spring);
 }
+.whatsapp-flotante:hover { transform: scale(1.08); }
 .whatsapp-flotante::before {
   content: "";
   position: absolute;
@@ -435,51 +591,32 @@ body {
   border-radius: 50%;
   border: 2px solid rgba(37,211,102,0.5);
   animation: pulso 2s ease-out infinite;
+  pointer-events: none;
 }
 @keyframes pulso {
   0% { transform: scale(0.9); opacity: 1; }
   100% { transform: scale(1.5); opacity: 0; }
 }
 
-/* ===== RESPONSIVE (desktop) ===== */
+/* ===== RESPONSIVE ===== */
 @media (min-width: 640px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
-  .titulo { font-size: 40px; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+  .aviso-bonus { font-size: 13px; }
 }
-@media (min-width: 1024px) {
-  .grid { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 380px) {
+  .tab { font-size: 11px; padding: 10px 4px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 10px; }
+  .card { padding: 16px 12px; }
+  .cantidad { font-size: 18px; }
+  .precio { font-size: 21px; }
 }
 
 /* Reducir animación si se prefiere */
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
   .card { opacity: 1; transform: none; }
-}
-.precio .simbolo { font-size: 14px; color: var(--texto-dim); font-weight: 600; }
-
-/* ===== TAGS / BADGES ===== */
-.card { position: relative; }
-.tag {
-  position: absolute;
-  top: -10px;
-  right: 10px;
-  z-index: 2;
-  background: linear-gradient(135deg, #ffd700, #ff8c00);
-  color: #1a1200;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 3px 10px;
-  border-radius: 999px;
-  letter-spacing: 0.3px;
-  box-shadow: 0 3px 10px rgba(255,200,0,0.35);
-  white-space: nowrap;
-}
-.tag-hot { background: linear-gradient(135deg, #ff4d4d, #ff7a00); color: #fff; }
-.tag-fav { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #3a2a00; }
-.cantidad .extra {
-  display: block;
-  font-size: 13px;
-  color: var(--texto-dim);
-  font-weight: 600;
-  margin-top: 4px;
 }
